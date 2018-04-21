@@ -105,6 +105,8 @@
         function initMap() {
             const mapEl = document.getElementById('map-canvas');
             const problemView = document.querySelector('.problemPage');
+            const addHydrantBtn = document.querySelector('.add-hydrant');
+            const addHydrantForm = document.querySelector('.add-hydrant-content');
 
             navigator.geolocation.getCurrentPosition(function(position) {
                 var lat=position.coords.latitude;
@@ -143,9 +145,25 @@
             });
           }
 
+          function handleAddHydrantClick() {
+            addHydrantBtn.addEventListener('click', (e) => {
+                addHydrantForm.classList.remove('el--hidden');
+            });
+          }
+
+          function handleHydrantFormCloseClick() {
+            addHydrantForm.addEventListener('click', (e) => {
+              if (e.target.classList.contains('closebtn')) {
+                addHydrantForm.classList.add('el--hidden');
+              }
+            });
+          }
+
           function bindEvents() {
             handleReportBtnClick();
             handleProblemViewCloseClick();
+            handleAddHydrantClick();
+            handleHydrantFormCloseClick();
           }
         }
 
@@ -188,6 +206,10 @@
     <body>
         <input id="searchInput" class="controls" type="text" placeholder="Search Box">
         <div id="map-canvas"></div>
+
+        <!-- Add hydrant -->
+
+        <button class="add-hydrant"></button>
         
           <!-- Submit Page -->
         
@@ -211,6 +233,32 @@
               </div>
             </form>
           </div>
+
+          <div class="add-hydrant-content el--hidden">
+            <button class="closebtn">X</button>
+            <h2 class="add-hydrant-form__header">Add new hydrant</h2>
+            <form class="add-hydrant-content__form">
+                <button class="add-hydrant-form__get-location">
+                    <svg width="20" height="20" viewBox="0 0 512 512">
+                        <path
+                         d="M507.38 68.225L315.582 484.108C294.161 530.519 224 515.72 224 463.993V288H47.933c-51.323 
+                            0-66.635-70.111-20.115-91.582L443.683 4.529c39.945-18.437 82.602 22.735 63.697 
+                            63.696zm-50.156-34.697L41.278 225.457c-15.491 7.149-10.443 30.526 6.708 30.526H256v208c0 
+                            17.923 23.596 21.722 30.527 6.705L478.452 54.769c6.3-13.653-7.795-27.441-21.228-21.241z"/>
+                    </svg>
+                    Use my location
+                </button>
+                <div class="add-hydrant-content__coordinates">
+                    <label for="lat">Latitude: </label>
+                    <input type="text" placeholder="Latitude" id="lat">
+                </div>
+                <div class="add-hydrant-content__coordinates">
+                    <label for="long">Longitude: </label>
+                    <input type="text" placeholder="Longitude" id="long">
+                </div>
+                <button>submit</button>
+            </form>
+        </div>
 
         </main> 
         <!-- <script type="text/javascript" src="js/index.js"></script> -->
