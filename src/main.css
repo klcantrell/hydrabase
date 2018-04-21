@@ -1,0 +1,21 @@
+.problemPage {
+    border: 5px solid #E9CCB1;
+    border-radius: 10px;
+    padding: 20px 30px;
+    margin: 10% auto;
+    width: 50%;
+    background: #F4DAC2;
+    line-height: 3em;
+}
+
+.reportHead{
+    text-align: center;
+    text-decoration: underline;
+    color: #ce2029;
+}
+
+.insideBox{
+    margin: auto;
+    padding: 0px 30px;
+}
+
