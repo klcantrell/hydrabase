@@ -46,21 +46,11 @@
                 var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
                 var marker = new google.maps.Marker({position: myLatlng,map: map});
 
-                const mockHydrant = {
-                  id: 1,
-                  mainSize: 3.5,
-                  threadSize: 'Storz',
-                  model: 'Hydrant3000',
-                  wrench: 'magnetic'
-                };
-
                 attachHydrantInfo({
                   map,
                   marker, 
                   content: hydrantInfoTemplate(mockHydrant)
                 });
-
-                console.log('being run?');
 
             }, onError, { timeout: 30000 });
 
@@ -69,11 +59,20 @@
                 'message: ' + error.message + '\n');
             }
 
+          const mockHydrant = {
+            id: 1,
+            mainSize: 3.5,
+            threadSize: 'Storz',
+            model: 'Hydrant3000',
+            wrench: 'magnetic',
+            imgSrc: 'img/fire-hydrant-01.jpg'
+          };
+
           function hydrantInfoTemplate(hydrantData) {
             return html`
               <div class="hydrant-info">
                   <div class="hydrant-info__head">
-                    <img alt="">
+                    <img class="hydrant-info__img" src="${hydrantData.imgSrc}" alt="">
                     <div class="hydrant-info__data">
                       <ul>
                         <li>Hydrant ID: ${hydrantData.id}</li>
@@ -85,8 +84,8 @@
                     </div>
                   </div>
                   <div class="hydrant-info__btns">
-                    <button class="hydrant-info__report-btn">Edit</button>
-                    <button class="hydrant-info__report-btn">Report Problem</button>
+                    <button class="hydrant-info__edit-btn hydrant-info__btn">Edit</button>
+                    <button class="hydrant-info__report-btn hydrant-info__btn">Report Problem</button>
                   </div>
               </div>
             `;
@@ -94,7 +93,8 @@
 
           function attachHydrantInfo({ map, marker, content }) {
             const infowindow = new google.maps.InfoWindow({
-                content: content
+                content: content,
+                maxWidth: 400
             });
             marker.addListener("click", function() {
                 infowindow.open(map, marker);
@@ -119,7 +119,10 @@
 
         }
 
+        // UTILS END
+
         initMap();
+
         </script>
         <script async defer
         src="http://maps.google.com/maps/api/js?key=AIzaSyAY4RUgxwdpHRumfpCMmS7ZO1GSn-Fa6eA&callback=initMap" type="text/javascript"></script>

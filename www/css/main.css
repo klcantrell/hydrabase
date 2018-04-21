@@ -20,6 +20,25 @@ body {
   height: 100%; 
 }
 
+.hydrant-info__head {
+  display: flex;
+  align-items: center;
+}
+
+.hydrant-info__img {
+  width: 100px;
+  height: auto;
+}
+
+.hydrant-info__btns {
+  display: flex;
+  justify-content: center;
+}
+
+.hydrant-info__btn {
+  margin: 4px;
+}
+
 .problemPage {
     border: 5px solid #E9CCB1;
     border-radius: 10px;
