@@ -7,13 +7,13 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-plugin-browsersync": {
+      "PACKAGE_NAME": "team.red.civichack"
+    },
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "team.red.civichack"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "team.red.civichack"
-    },
-    "cordova-plugin-browsersync": {
       "PACKAGE_NAME": "team.red.civichack"
     }
   },

@@ -1,6 +1,5 @@
 :root {
   box-sizing: border-box;
-  width: 100vw;
   height: 100vh;
 }
 
@@ -12,73 +11,23 @@
 
 body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   overflow-x: hidden;
 }
 
-main {
-  margin-top: 5vh;
-  width: 100vw;
-  height: 95vh;
-  max-width: 600px;
-  margin: 5vh auto;
+#map-canvas { 
+  height: 100%; 
 }
 
-.location-input {
-  height: 2rem;
-  width: 100%;
-  border-radius: 5px;
-}
-
-.map {
-  position: relative;
-  width: 100%;
-  height: 95%;
+.problemPage {
+  border: 5px solid #E9CCB1;
   border-radius: 10px;
-  border: 1px solid black;
-}
-
-.map__buttons {
-  position: absolute;
-  top: 5%;
-  width: 100%;
-  display: flex;
-  flex-flow: column;
-  align-items: flex-end; 
-}
-
-.map__btn {
-  margin: 5px;
-  padding: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-width: 1px;
-  border-radius: 2px;
-  outline: none;
-  background-color: rgba(255, 255, 255, 0.685);
-  border: rgb(245, 245, 245);
-  box-shadow: 0 0 4px rgb(39, 39, 39);
-}
-
-.map__btn:active {
-  background-color: rgb(255, 255, 255);
-}
-
-.map__content {
-  background-image: url("../img/map-placeholder.jpg");
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-}
-
-  .problemPage {
-    border: 5px solid #E9CCB1;
-    border-radius: 10px;
-    padding: 10px 15px;
-    margin: 0 auto 10px auto;
-    background: #F4DAC2;
-    line-height: 3em;
-    max-width: 318px;
+  padding: 10px 15px;
+  margin: 0 auto 10px auto;
+  background: #F4DAC2;
+  line-height: 3em;
+  max-width: 318px;
 }
 
 .idPage{
