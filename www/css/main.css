@@ -21,48 +21,6 @@ body {
 }
 
 .problemPage {
-  border: 5px solid #E9CCB1;
-  border-radius: 10px;
-<<<<<<< HEAD
-  border: 1px solid black;
-}
-
-.map__buttons {
-  position: absolute;
-  top: 5%;
-  width: 100%;
-  display: flex;
-  flex-flow: column;
-  align-items: flex-end; 
-}
-
-.map__btn {
-  margin: 5px;
-  padding: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-width: 1px;
-  border-radius: 2px;
-  outline: none;
-  background-color: rgba(255, 255, 255, 0.685);
-  border: rgb(245, 245, 245);
-  box-shadow: 0 0 4px rgb(39, 39, 39);
-}
-
-.map__btn:active {
-  background-color: rgb(255, 255, 255);
-}
-
-.map__content {
-  background-image: url("./images/map-placeholder.jpg");
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-}
-
-
-.problemPage {
     border: 5px solid #E9CCB1;
     border-radius: 10px;
     padding: 10px 15px;
@@ -70,26 +28,6 @@ body {
     background: #F4DAC2;
     line-height: 3em;
     max-width: 318px;
-=======
-  padding: 10px 15px;
-  margin: 0 auto 10px auto;
-  background: #F4DAC2;
-  line-height: 3em;
-  max-width: 318px;
->>>>>>> d202b2568d1e5ecd571be3944136a8491534fb60
-}
-
-.idPage{
-  border: 2px solid black;
-  border-radius: 10px;
-  padding: 10px 15px;
-  max-width: 318px;
-  margin: 0 auto 10px auto;
-}
-
-.idImg {
-  height: 60%;
-  width: 60%;
 }
 
 .closebtn{
@@ -116,7 +54,6 @@ body {
 .insideBox{
     margin: auto;
     padding: -15px 25px;
-
 }
 
 .subbtm {
