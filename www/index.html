@@ -28,21 +28,40 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
         <title>Hello World</title>
+        <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        #map-canvas { height: 100% }
+        </style>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script>
+        function initMap() {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat=position.coords.latitude;
+                var lang=position.coords.longitude;
+                var myLatlng = new google.maps.LatLng(lat,lang);
+                var mapOptions = {zoom: 16, center: myLatlng};
+                var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                var marker = new google.maps.Marker({position: myLatlng,map: map});
+            }, onError, { timeout: 30000 });
+            function onError(error) {
+                alert('code: ' + error.code + '\n' +
+                'message: ' + error.message + '\n');
+            }
+        }
+        </script>
+        <script async defer
+        src="http://maps.google.com/maps/api/js?key=AIzaSyAY4RUgxwdpHRumfpCMmS7ZO1GSn-Fa6eA&callback=initMap" type="text/javascript"></script>
     </head>
     <body>
-        <div class="app">
-          <div id="deviceready" class="blink">
-              <p class="event listening">Connecting to Device</p>
-              <p class="event received">Device is Ready</p>
-          </div>
-        </div>
-        <main>
+        <div id="map-canvas"></div>
+        <!-- <main>
           <input class="location-input" type="text" placeholder="Address or hydrant ID...">
           <div class="map">
             <div class="map__buttons">
@@ -75,10 +94,10 @@
             </div>
             <div class="map__content"></div>
           </div>
-        
+        -->
         
           <!-- Submit Page -->
-          <div class="container problemPage">
+          <!-- <div class="container problemPage">
               <h3 class="reportHead">Report Hydrant Problem</h3>
               <div class="insideBox">
               <input type="radio" id="radioButton">Out of Service</input><br>
@@ -93,8 +112,7 @@
               <button>submit</button>
               </div>
             </div>
-        </main>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        </main> -->
+        <!-- <script type="text/javascript" src="js/index.js"></script> -->
     </body>
 </html>
