@@ -52,6 +52,19 @@ body {
   background-color: white;
 }
 
+.fa-check-square-o {
+  color: #0bb04a;
+}
+
+.info-header {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.hydrant-info__list .title {
+  font-weight: 500;
+}
+
 .add-hydrant-content__form {
   display: flex;
   flex-flow: column;
@@ -84,10 +97,12 @@ body {
 .hydrant-info__head {
   display: flex;
   align-items: center;
+  margin-top: 7px;
+  margin-bottom: 7px;
 }
 
 .hydrant-info__img {
-  width: 100px;
+  width: 120px;
   height: auto;
   margin-right: 10px;
 }
