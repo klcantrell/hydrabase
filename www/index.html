@@ -20,7 +20,7 @@
 <html>
     <head>
         <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
+        Customize this policy to fit your own app's needs. For more guidance, see:  
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
         Some notes:
             * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
@@ -50,56 +50,136 @@
         #pac-input:focus {
             border-color: #4d90fe;
         }
+        .controls {
+            margin-top: 10px;
+        }
         </style>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <title>Team Red</title>
         <script type="text/javascript" src="cordova.js"></script>
+        <script src="data/fireData.js"></script>
         <script>
-        var hydrants = [
-            {
-                lat: 39.967432,
-                lng: -86.013680
-            },
-            {
-                lat: 39.969249,
-                lng: -86.007110
-            }
-        ]
+        function html(literals, ...customs) {
+            let result = "";
+            customs.forEach((custom, i) => {
+                const lit = literals[i];
+                if (Array.isArray(custom)) {
+                custom = custom.join("");
+                }
+                result += lit;
+                result += custom;
+            });
+            result += literals[literals.length - 1];
+            return result;
+        }
+
+        function hydrantInfoTemplate(hydrantData) {
+            return html`
+              <div class="hydrant-info">
+                  <div class="hydrant-info__head">
+                    <img class="hydrant-info__img" src="${hydrantData.img}" alt="">
+                    <div class="hydrant-info__data">
+                      <ul class="hydrant-info__list">
+                        <li>Hydrant ID: ${hydrantData.hydrant_id}</li>
+                        <li>Status: ${hydrantData.status}</li>
+                        <li>Top Color: ${hydrantData.top_color}</li>
+                        <li>Body Color: ${hydrantData.body_color}</li>
+                        <li>Type: ${hydrantData.type}</li>
+                        <li>Hose Size: ${hydrantData.hose_size}</li>
+                        <li>Storz: ${hydrantData.storz}</li>
+                        <li>Thread Type: ${hydrantData.thread_type}</li>
+                        <li>Notes: ${hydrantData.notes}</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="hydrant-info__btns">
+                    <button class="hydrant-info__edit-btn hydrant-info__btn">Edit</button>
+                    <button class="hydrant-info__report-btn hydrant-info__btn">Report Problem</button>
+                  </div>
+              </div>
+            `;
+          }
+
+          var activeInfoWindow = null;
+
         function initMap() {
+            const mapEl = document.getElementById('map-canvas');
+            const problemView = document.querySelector('.problemPage');
+
             navigator.geolocation.getCurrentPosition(function(position) {
                 var lat=position.coords.latitude;
                 var lang=position.coords.longitude;
                 var myLatlng = new google.maps.LatLng(lat,lang);
-                var mapOptions = {zoom: 16, center: myLatlng};
-                var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                var mapOptions = {zoom: 13.3, center: myLatlng};
+                var map = new google.maps.Map(mapEl, mapOptions);
                 var marker = new google.maps.Marker({position: myLatlng, map: map});
                 var searchInput = document.getElementById('searchInput');
                 var searchBox = new google.maps.places.SearchBox(searchInput);
                 map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
 
-                placeHydrants(map);
+                var hydrants = placeHydrants(map);
+
+                bindEvents();
             }, onError, { timeout: 30000 });
+
             function onError(error) {
                 alert('code: ' + error.code + '\n' +
                 'message: ' + error.message + '\n');
             }
+
+          function handleReportBtnClick() {
+            mapEl.addEventListener('click', (e) => {
+              if (e.target.classList.contains('hydrant-info__report-btn')) {
+                problemView.classList.remove('el--hidden');
+              }
+            });
+          }
+
+          function handleProblemViewCloseClick() {
+            problemView.addEventListener('click', (e) => {
+              if (e.target.classList.contains('closebtn')) {
+                problemView.classList.add('el--hidden');
+              }
+            });
+          }
+
+          function bindEvents() {
+            handleReportBtnClick();
+            handleProblemViewCloseClick();
+          }
         }
 
         // Place hydrant markers
         function placeHydrants(map) {
-            var hydrantMarkers = hydrants.map((hydrant, i) => {
+            return fireData.map((hydrant, i) => {
                 var image = {
                     url: 'img/hydrant.png',
                     scaledSize: new google.maps.Size(34, 34)
                 };
-                var position = new google.maps.LatLng(hydrant.lat, hydrant.lng);
+                var position = new google.maps.LatLng(hydrant.lat, hydrant.lon);
 
-                return new google.maps.Marker({
+                // create the custom hydrant marker
+                var hydrantMarker = new google.maps.Marker({
                     position,
                     icon: image,
                     map,
-                    title: `Hydrant ${i}`
+                    title: `Hydrant ${hydrant.hydrant_id}`
                 });
+
+                // attach the info popup to the hydrant marker
+                const infowindow = new google.maps.InfoWindow({
+                    content: hydrantInfoTemplate(hydrant),
+                    maxWidth: 400
+                });
+
+                hydrantMarker.addListener("click", function() {
+                    activeInfoWindow && activeInfoWindow.close();
+                    infowindow.open(map, hydrantMarker);
+                    activeInfoWindow = infowindow;
+                });                
             });
         }
+        // UTILS END
 
         </script>
         <script async defer
@@ -108,58 +188,31 @@
     <body>
         <input id="searchInput" class="controls" type="text" placeholder="Search Box">
         <div id="map-canvas"></div>
-        <!-- <main>
-          <input class="location-input" type="text" placeholder="Address or hydrant ID...">
-          <div class="map">
-            <div class="map__buttons">
-              <button class="map__add-btn map__btn">
-                <svg width="35" height="35" viewBox="0 0 448 512">
-                    <path fill="rgb(50, 50, 50)" 
-                      d="M436 228H252V44c0-6.6-5.4-12-12-12h-32c-6.6 0-12 5.4-12 12v184H12c-6.6 
-                        0-12 5.4-12 12v32c0 6.6 5.4 12 12 12h184v184c0 6.6 5.4 12 12 12h32c6.6 
-                        0 12-5.4 12-12V284h184c6.6 0 12-5.4 12-12v-32c0-6.6-5.4-12-12-12z">
-                    </path>
-                  </svg>
-              </button>
-              <button class="map__findMe-btn map__btn">
-                  <svg width="35" height="35" viewBox="0 0 512 512">
-                    <path fill="rgb(50, 50, 50)" 
-                      d="M506 240h-34.591C463.608 133.462 378.538 48.392 272 40.591V6a6 
-                        6 0 0 0-6-6h-20a6 6 0 0 0-6 6v34.591C133.462 48.392 48.392 133.462 
-                        40.591 240H6a6 6 0 0 0-6 6v20a6 6 0 0 0 6 6h34.591C48.392 378.538 133.462 
-                        463.608 240 471.409V506a6 6 0 0 0 6 6h20a6 6 0 0 0 6-6v-34.591C378.538 
-                        463.608 463.608 378.538 471.409 272H506a6 6 0 0 0 6-6v-20a6 6 0 0 
-                        0-6-6zM272 439.305V374a6 6 0 0 0-6-6h-20a6 6 0 0 0-6 6v65.305C151.282 
-                        431.711 80.315 361.031 72.695 272H138a6 6 0 0 0 6-6v-20a6 6 0 0 0-6-6H72.695C80.289 
-                        151.282 150.969 80.316 240 72.695V138a6 6 0 0 0 6 6h20a6 6 0 0 0 6-6V72.695C360.718 
-                        80.289 431.685 150.969 439.305 240H374a6 6 0 0 0-6 6v20a6 6 0 0 0 6 
-                        6h65.305C431.711 360.718 361.031 431.684 272 439.305zM280 256c0 13.255-10.745 
-                        24-24 24s-24-10.745-24-24 10.745-24 24-24 24 10.745 24 24z">
-                    </path>
-                  </svg>
-              </button>
-            </div>
-            <div class="map__content"></div>
-          </div>
-        -->
         
           <!-- Submit Page -->
-          <!-- <div class="container problemPage">
+        
+          <div class="container problemPage el--hidden">
+              <button class="closebtn">X</button>
               <h3 class="reportHead">Report Hydrant Problem</h3>
+              <form action="">
               <div class="insideBox">
-              <input type="radio" id="radioButton">Out of Service</input><br>
-              <input type="radio" id="radioButton">Debris in the Hydrant</input><br>
-              <input type="radio" id="radioButton">Missing Caps & Rounded Stems</input><br>
-              <input type="radio" id="radioButton">Caps on Too Tight</input><br>
-              <input type="radio" id="radioButton">Blocked Hydrant</input><br>
-              <input type="radio" id="radioButton">Plug Away</input><br>
-              <input type="radio" id="radioButton">Other:
-                <input type="text" name="oname" style="width: 250px;"></input>
+              <label><input type="checkbox" id="radioButton">Out of Service</input></label><br>
+              <label><input type="checkbox" id="radioButton">Debris in the Hydrant</input></label><br>
+              <label><input type="checkbox" id="radioButton">Missing Caps & Stems</input><label></label><br>
+              <label><input type="checkbox" id="radioButton">Caps on Too Tight</input></label><br>
+              <label><input type="checkbox" id="radioButton">Blocked Hydrant</input></label><br>
+              <label><input type="checkbox" id="radioButton">Plug Away</input></label><br>
+              <label><input type="checkbox" id="radioButton">Other:
+                <input type="text" name="oname" style="width: 200px;"></input>
               </input><br>
-              <button>submit</button>
+              <div class="subbtm">
+                <button>submit</button>
               </div>
-            </div>
-        </main> -->
+              </div>
+            </form>
+          </div>
+
+        </main> 
         <!-- <script type="text/javascript" src="js/index.js"></script> -->
     </body>
 </html>
