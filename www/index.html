@@ -35,12 +35,34 @@
         <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
         <title>Hello World</title>
         <style type="text/css">
-        html { height: 100% }
-        body { height: 100%; margin: 0; padding: 0 }
+        html, body { height: 100%; margin: 0; padding: 0 }
         #map-canvas { height: 100% }
+        #searchInput {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 8px 0 8px;
+            text-overflow: ellipsis;
+            width: 400px;
+        }
+        #pac-input:focus {
+            border-color: #4d90fe;
+        }
         </style>
         <script type="text/javascript" src="cordova.js"></script>
         <script>
+        var hydrants = [
+            {
+                lat: 39.967432,
+                lng: -86.013680
+            },
+            {
+                lat: 39.969249,
+                lng: -86.007110
+            }
+        ]
         function initMap() {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var lat=position.coords.latitude;
@@ -48,18 +70,43 @@
                 var myLatlng = new google.maps.LatLng(lat,lang);
                 var mapOptions = {zoom: 16, center: myLatlng};
                 var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                var marker = new google.maps.Marker({position: myLatlng,map: map});
+                var marker = new google.maps.Marker({position: myLatlng, map: map});
+                var searchInput = document.getElementById('searchInput');
+                var searchBox = new google.maps.places.SearchBox(searchInput);
+                map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
+
+                placeHydrants(map);
             }, onError, { timeout: 30000 });
             function onError(error) {
                 alert('code: ' + error.code + '\n' +
                 'message: ' + error.message + '\n');
             }
         }
+
+        // Place hydrant markers
+        function placeHydrants(map) {
+            var hydrantMarkers = hydrants.map((hydrant, i) => {
+                var image = {
+                    url: 'img/hydrant.png',
+                    scaledSize: new google.maps.Size(34, 34)
+                };
+                var position = new google.maps.LatLng(hydrant.lat, hydrant.lng);
+
+                return new google.maps.Marker({
+                    position,
+                    icon: image,
+                    map,
+                    title: `Hydrant ${i}`
+                });
+            });
+        }
+
         </script>
         <script async defer
-        src="http://maps.google.com/maps/api/js?key=AIzaSyAY4RUgxwdpHRumfpCMmS7ZO1GSn-Fa6eA&callback=initMap" type="text/javascript"></script>
+        src="http://maps.google.com/maps/api/js?key=AIzaSyAY4RUgxwdpHRumfpCMmS7ZO1GSn-Fa6eA&callback=initMap&libraries=places" type="text/javascript"></script>
     </head>
     <body>
+        <input id="searchInput" class="controls" type="text" placeholder="Search Box">
         <div id="map-canvas"></div>
         <!-- <main>
           <input class="location-input" type="text" placeholder="Address or hydrant ID...">
