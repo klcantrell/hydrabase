@@ -47,11 +47,11 @@ body {
     right: 0;
     margin: auto;
     transform: translateY(-50%);
-    border: 3px solid gray;
-    border-radius: 10px;
+    border: 1px solid gray;
+    border-radius: 2px;
     padding: 10px 15px;
     margin: 0 auto 10px auto;
-    background: #E0E0E0;
+    background: white;
     line-height: 3em;
     max-width: 318px;
 }
@@ -90,4 +90,19 @@ body {
 .el--hidden {
   display: none;
   visibility: hidden;
+}
+
+.container {
+  animation: slideup 1s;
+  width: 350px; height: 475px;
+}
+@keyframes slideup {
+  from {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(-50%);
+    opacity: 1;
+  }
 }
