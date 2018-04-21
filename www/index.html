@@ -32,6 +32,7 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+<<<<<<< HEAD
         <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <title>Hello World</title>
@@ -40,9 +41,14 @@
         body { height: 100%; margin: 0; padding: 0 }
         #map-canvas { height: 100% }
         </style>
+=======
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <title>Team Red</title>
+>>>>>>> d202b2568d1e5ecd571be3944136a8491534fb60
         <script type="text/javascript" src="cordova.js"></script>
         <script>
         function initMap() {
+
             navigator.geolocation.getCurrentPosition(function(position) {
                 var lat=position.coords.latitude;
                 var lang=position.coords.longitude;
@@ -50,52 +56,87 @@
                 var mapOptions = {zoom: 16, center: myLatlng};
                 var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
                 var marker = new google.maps.Marker({position: myLatlng,map: map});
+
+                const mockHydrant = {
+                  id: 1,
+                  mainSize: 3.5,
+                  threadSize: 'Storz',
+                  model: 'Hydrant3000',
+                  wrench: 'magnetic'
+                };
+
+                attachHydrantInfo({
+                  map,
+                  marker, 
+                  content: hydrantInfoTemplate(mockHydrant)
+                });
+
+                console.log('being run?');
+
             }, onError, { timeout: 30000 });
+
             function onError(error) {
                 alert('code: ' + error.code + '\n' +
                 'message: ' + error.message + '\n');
             }
+
+          function hydrantInfoTemplate(hydrantData) {
+            return html`
+              <div class="hydrant-info">
+                  <div class="hydrant-info__head">
+                    <img alt="">
+                    <div class="hydrant-info__data">
+                      <ul>
+                        <li>Hydrant ID: ${hydrantData.id}</li>
+                        <li>Main size: ${hydrantData.mainSize}</li>
+                        <li>Thread size: ${hydrantData.threadSize}</li>
+                        <li>Model: ${hydrantData.model}</li>
+                        <li>Wrench type: ${hydrantData.wrench}</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="hydrant-info__btns">
+                    <button class="hydrant-info__report-btn">Edit</button>
+                    <button class="hydrant-info__report-btn">Report Problem</button>
+                  </div>
+              </div>
+            `;
+          }
+
+          function attachHydrantInfo({ map, marker, content }) {
+            const infowindow = new google.maps.InfoWindow({
+                content: content
+            });
+            marker.addListener("click", function() {
+                infowindow.open(map, marker);
+            });
+          }
+
+          // UTILS
+
+          function html(literals, ...customs) {
+            let result = "";
+            customs.forEach((custom, i) => {
+                const lit = literals[i];
+                if (Array.isArray(custom)) {
+                custom = custom.join("");
+                }
+                result += lit;
+                result += custom;
+            });
+            result += literals[literals.length - 1];
+            return result;
+          }
+
         }
+
+        initMap();
         </script>
         <script async defer
         src="http://maps.google.com/maps/api/js?key=AIzaSyAY4RUgxwdpHRumfpCMmS7ZO1GSn-Fa6eA&callback=initMap" type="text/javascript"></script>
     </head>
     <body>
         <div id="map-canvas"></div>
-        <!-- <main>
-          <input class="location-input" type="text" placeholder="Address or hydrant ID...">
-          <div class="map">
-            <div class="map__buttons">
-              <button class="map__add-btn map__btn">
-                <svg width="35" height="35" viewBox="0 0 448 512">
-                    <path fill="rgb(50, 50, 50)" 
-                      d="M436 228H252V44c0-6.6-5.4-12-12-12h-32c-6.6 0-12 5.4-12 12v184H12c-6.6 
-                        0-12 5.4-12 12v32c0 6.6 5.4 12 12 12h184v184c0 6.6 5.4 12 12 12h32c6.6 
-                        0 12-5.4 12-12V284h184c6.6 0 12-5.4 12-12v-32c0-6.6-5.4-12-12-12z">
-                    </path>
-                  </svg>
-              </button>
-              <button class="map__findMe-btn map__btn">
-                  <svg width="35" height="35" viewBox="0 0 512 512">
-                    <path fill="rgb(50, 50, 50)" 
-                      d="M506 240h-34.591C463.608 133.462 378.538 48.392 272 40.591V6a6 
-                        6 0 0 0-6-6h-20a6 6 0 0 0-6 6v34.591C133.462 48.392 48.392 133.462 
-                        40.591 240H6a6 6 0 0 0-6 6v20a6 6 0 0 0 6 6h34.591C48.392 378.538 133.462 
-                        463.608 240 471.409V506a6 6 0 0 0 6 6h20a6 6 0 0 0 6-6v-34.591C378.538 
-                        463.608 463.608 378.538 471.409 272H506a6 6 0 0 0 6-6v-20a6 6 0 0 
-                        0-6-6zM272 439.305V374a6 6 0 0 0-6-6h-20a6 6 0 0 0-6 6v65.305C151.282 
-                        431.711 80.315 361.031 72.695 272H138a6 6 0 0 0 6-6v-20a6 6 0 0 0-6-6H72.695C80.289 
-                        151.282 150.969 80.316 240 72.695V138a6 6 0 0 0 6 6h20a6 6 0 0 0 6-6V72.695C360.718 
-                        80.289 431.685 150.969 439.305 240H374a6 6 0 0 0-6 6v20a6 6 0 0 0 6 
-                        6h65.305C431.711 360.718 361.031 431.684 272 439.305zM280 256c0 13.255-10.745 
-                        24-24 24s-24-10.745-24-24 10.745-24 24-24 24 10.745 24 24z">
-                    </path>
-                  </svg>
-              </button>
-            </div>
-            <div class="map__content"></div>
-          </div>
-        -->
         
           <!-- Submit Page -->
           
