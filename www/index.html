@@ -73,6 +73,14 @@
             return result;
         }
 
+        function delay(time) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve();
+                }, time);
+            })
+        }
+
         function hydrantInfoTemplate(hydrantData) {
             return html`
               <div class="hydrant-info">
@@ -147,14 +155,19 @@
 
           function handleAddHydrantClick() {
             addHydrantBtn.addEventListener('click', (e) => {
-                addHydrantForm.classList.remove('el--hidden');
+                addHydrantForm.classList.add('fadeIn')
+                addHydrantForm.classList.remove('el--hidden', 'fadeOut');
             });
           }
 
           function handleHydrantFormCloseClick() {
             addHydrantForm.addEventListener('click', (e) => {
               if (e.target.classList.contains('closebtn')) {
-                addHydrantForm.classList.add('el--hidden');
+                addHydrantForm.classList.add('fadeOut');
+                delay(800).then(() => {
+                    addHydrantForm.classList.remove('fadeIn');
+                    addHydrantForm.classList.add('el--hidden');
+                })
               }
             });
           }
