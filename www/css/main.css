@@ -21,6 +21,66 @@ body {
   height: 100%; 
 }
 
+.add-hydrant {
+  width: 50px;
+  height: 50px;
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgaGVpZ2h0PScyMDAnIHdpZHRoPScyMDAnICBmaWxsPSIjMDAwMDAwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgODIgMTAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA4MiAxMDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGQ9Ik00My45OTksNi4yN1YwaC02djYuMjdDMjkuNDg5LDcuNzAxLDIzLDE1LjA4MywyMywyNGgzNkM1OSwxNS4wODMsNTIuNTEsNy43LDQzLjk5OSw2LjI3eiI+PC9wYXRoPjxwYXRoIGQ9Ik01LjUyMyw0NEgwdjZoNS41MjNjMS4yMzYsMy40OTMsNC41Niw2LDguNDc3LDZWMzhDMTAuMDgzLDM4LDYuNzYsNDAuNTA3LDUuNTIzLDQ0eiI+PC9wYXRoPjxwYXRoIGQ9Ik04Miw0NGgtNS41MjNjLTEuMjM2LTMuNDkzLTQuNTYtNi04LjQ3Ny02djE4YzMuOTE3LDAsNy4yNC0yLjUwNyw4LjQ3Ny02SDgyVjQ0eiI+PC9wYXRoPjxwYXRoIGQ9Ik00MSw0MGMtMy44NTksMC03LDMuMTQxLTcsN3MzLjE0MSw3LDcsN3M3LTMuMTQxLDctN1M0NC44NTksNDAsNDEsNDB6Ij48L3BhdGg+PHBhdGggZD0iTTU5LDM4VjI4SDIzdjEwaC01djE4aDV2NDRoMzZWNTZoNVYzOEg1OXogTTQxLDU4Yy02LjA2NSwwLTExLTQuOTM1LTExLTExczQuOTM1LTExLDExLTExczExLDQuOTM1LDExLDExUzQ3LjA2NSw1OCw0MSw1OHoNCgkiPjwvcGF0aD48L3N2Zz4=");
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 50px;
+  margin-right: 10px;
+  background-color: white;
+}
+
+.add-hydrant:active {
+  opacity: 0.5;
+}
+
+.add-hydrant-content {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+  width: 100vw;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: white;
+}
+
+.add-hydrant-content__form {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.add-hydrant-content > h2 {
+  text-align: center;
+}
+
+.add-hydrant-content__coordinates {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  margin: 10px;
+}
+
+.add-hydrant-content__coordinates > input {
+  width: 200px;
+  margin-left: 30px;
+}
+
+.add-hydrant-form__get-location {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-bottom: 100px;
+}
+
 .hydrant-info__head {
   display: flex;
   align-items: center;
@@ -81,6 +141,8 @@ body {
 
 .closebtn{
   float: right;
+  align-self: flex-end;
+  margin-right: 15px;
   color: black;
   background-color: transparent;
   border: none;
@@ -119,6 +181,15 @@ body {
   animation: slideup 1s;
   width: 350px; height: 475px;
 }
+
+.fadeIn {
+  animation: fadeIn 1s; 
+}
+
+.fadeOut {
+  animation: fadeOut 1s; 
+}
+
 @keyframes slideup {
   from {
     transform: translateY(0);
@@ -127,5 +198,27 @@ body {
   to {
     transform: translateY(-50%);
     opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(50%);
+    opacity: 0;
   }
 }
