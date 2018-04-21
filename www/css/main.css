@@ -65,26 +65,54 @@ main {
 }
 
 .map__content {
-  background-image: url("./images/map-placeholder.jpg");
+  background-image: url("../img/map-placeholder.jpg");
   background-size: cover;
   width: 100%;
   height: 100%;
 }
 
-.problemPage {
+  .problemPage {
     border: 5px solid #E9CCB1;
     border-radius: 10px;
-    padding: 20px 30px;
-    margin: 10% auto;
-    width: 50%;
+    padding: 10px 15px;
+    margin: 0 auto 10px auto;
     background: #F4DAC2;
     line-height: 3em;
+    max-width: 318px;
+}
+
+.idPage{
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px 15px;
+  max-width: 318px;
+  margin: 0 auto 10px auto;
+}
+
+.idImg {
+  height: 60%;
+  width: 60%;
+}
+
+.closebtn{
+  float: right;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 1px #999;
+}
+.closebtn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 3px #666;
+  transform: translateY(4px);
 }
 
 .reportHead{
     text-align: center;
     text-decoration: underline;
     color: #ce2029;
+    margin-bottom: 0px;
 }
 
 .insideBox{
