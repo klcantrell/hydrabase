@@ -45,6 +45,22 @@ body {
 
 .hydrant-info__btn {
   margin: 4px;
+  padding: 4px 15px;
+  border-radius: 3px;
+  border: none;
+}
+
+.hydrant-info__btn:hover {
+  background: #ddd;
+}
+
+.hydrant-info__report-btn {
+  background: #c02d23;
+  color: #fff;
+}
+
+.hydrant-info__report-btn:hover {
+  background: #ab251e;
 }
 
 .problemPage {
