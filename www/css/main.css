@@ -21,22 +21,21 @@ body {
 }
 
 .problemPage {
-    border: 5px solid #E9CCB1;
+    border: 3px solid gray;
     border-radius: 10px;
     padding: 10px 15px;
     margin: 0 auto 10px auto;
-    background: #F4DAC2;
+    background: #E0E0E0;
     line-height: 3em;
     max-width: 318px;
 }
 
 .closebtn{
   float: right;
-  color: #fff;
-  background-color: #4CAF50;
+  color: black;
+  background-color: transparent;
   border: none;
   border-radius: 50%;
-  box-shadow: 0 1px #999;
 }
 .closebtn:active {
   background-color: #3e8e41;
@@ -47,7 +46,7 @@ body {
 .reportHead{
     text-align: center;
     text-decoration: underline;
-    color: #ce2029;
+    color: black;
     margin-bottom: 0px;
 }
 
@@ -58,5 +57,6 @@ body {
 
 .subbtm {
   display: flex;
-  width: 25%;
+  width: 30%;
+  text-align: center;
 }
