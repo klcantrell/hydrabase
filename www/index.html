@@ -20,7 +20,7 @@
 <html>
     <head>
         <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
+        Customize this policy to fit your own app's needs. For more guidance, see:  
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
         Some notes:
             * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
@@ -33,6 +33,7 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
+        <link rel="stylesheet" type="text/css" href="css/main.css">
         <title>Hello World</title>
         <style type="text/css">
         html { height: 100% }
@@ -97,22 +98,26 @@
         -->
         
           <!-- Submit Page -->
+          
           <!-- <div class="container problemPage">
+              <button class="closebtn">X</button>
               <h3 class="reportHead">Report Hydrant Problem</h3>
+              <form>
               <div class="insideBox">
-              <input type="radio" id="radioButton">Out of Service</input><br>
-              <input type="radio" id="radioButton">Debris in the Hydrant</input><br>
-              <input type="radio" id="radioButton">Missing Caps & Rounded Stems</input><br>
-              <input type="radio" id="radioButton">Caps on Too Tight</input><br>
-              <input type="radio" id="radioButton">Blocked Hydrant</input><br>
-              <input type="radio" id="radioButton">Plug Away</input><br>
-              <input type="radio" id="radioButton">Other:
+              <label><input type="checkbox" id="radioButton">Out of Service</input></label><br>
+              <label><input type="checkbox" id="radioButton">Debris in the Hydrant</input></label><br>
+              <label><input type="checkbox" id="radioButton">Missing Caps & Stems</input><label></label><br>
+              <label><input type="checkbox" id="radioButton">Caps on Too Tight</input></label><br>
+              <label><input type="checkbox" id="radioButton">Blocked Hydrant</input></label><br>
+              <label><input type="checkbox" id="radioButton">Plug Away</input></label><br>
+              <label><input type="checkbox" id="radioButton">Other:
                 <input type="text" name="oname" style="width: 250px;"></input>
               </input><br>
-              <button>submit</button>
+              <button class="subbtm">submit</button>
               </div>
-            </div>
-        </main> -->
+            </form>
+            </div> -->
+        </main> 
         <!-- <script type="text/javascript" src="js/index.js"></script> -->
     </body>
 </html>
