@@ -62,11 +62,22 @@ body {
   text-align: center;
 }
 
-.add-hydrant-content__coordinates {
+.add-hydrant-content__form-item {
   display: flex;
+  flex-flow: row wrap;
   justify-content: space-between;
+  align-items: center;
   width: 300px;
   margin: 10px;
+}
+
+.add-hydrant-content__form-item > select {
+  width: 80%;
+  margin: auto;
+}
+
+.add-hydrant-content__form-item > p {
+  width: 100%;
 }
 
 .add-hydrant-content__coordinates > input {
@@ -78,6 +89,7 @@ body {
   display: flex;
   flex-flow: column;
   align-items: center;
+  font-size: 0.75rem;
   margin-bottom: 100px;
 }
 

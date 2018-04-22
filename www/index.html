@@ -252,7 +252,7 @@
             <h2 class="add-hydrant-form__header">Add new hydrant</h2>
             <form class="add-hydrant-content__form">
                 <button class="add-hydrant-form__get-location">
-                    <svg width="20" height="20" viewBox="0 0 512 512">
+                    <svg width="40" height="40" viewBox="0 0 512 512">
                         <path
                          d="M507.38 68.225L315.582 484.108C294.161 530.519 224 515.72 224 463.993V288H47.933c-51.323 
                             0-66.635-70.111-20.115-91.582L443.683 4.529c39.945-18.437 82.602 22.735 63.697 
@@ -261,13 +261,31 @@
                     </svg>
                     Use my location
                 </button>
-                <div class="add-hydrant-content__coordinates">
+                <div class="add-hydrant-content__form-item">
                     <label for="lat">Latitude: </label>
-                    <input type="text" placeholder="Latitude" id="lat">
+                    <input type="text" id="lat">
                 </div>
-                <div class="add-hydrant-content__coordinates">
+                <div class="add-hydrant-content__form-item">
                     <label for="long">Longitude: </label>
-                    <input type="text" placeholder="Longitude" id="long">
+                    <input type="text" id="long">
+                </div>
+                <div class="add-hydrant-content__form-item">
+                    <p>Top Color:</p>
+                    <select name="topColor">
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="orange">Orange</option>
+                        <option value="red">Red</option>
+                    </select>
+                </div>
+                <div class="add-hydrant-content__form-item">
+                    <p>Body Color:</p>
+                    <select name="bodyColor">
+                        <option value="white">White</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="violet">Violet</option>
+                        <option value="red">Red</option>
+                    </select>
                 </div>
                 <button>submit</button>
             </form>
