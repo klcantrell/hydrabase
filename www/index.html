@@ -8,203 +8,45 @@
         <title>Team Red</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/main.css">
-        <script type="text/javascript" src="cordova.js"></script>
         <script src="data/fireData.js"></script>
-        <script>
-        function html(literals, ...customs) {
-            let result = "";
-            customs.forEach((custom, i) => {
-                const lit = literals[i];
-                if (Array.isArray(custom)) {
-                custom = custom.join("");
-                }
-                result += lit;
-                result += custom;
-            });
-            result += literals[literals.length - 1];
-            return result;
-        }
-
-        function delay(time) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve();
-                }, time);
-            })
-        }
-
-        function hydrantInfoTemplate(hydrantData) {
-            return html`
-              <div class="hydrant-info">
-                <div class="info-header"><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span> Status</div>
-                  <div class="hydrant-info__head">                    
-                    <img class="hydrant-info__img" src="${hydrantData.img}" alt="">
-                    <div class="hydrant-info__data">
-                      <ul class="hydrant-info__list">
-                        <li><span class="title">Hydrant ID:</span> ${hydrantData.hydrant_id}</li>
-                        <li><span class="title">Top Color:</span> ${hydrantData.top_color}</li>
-                        <li><span class="title">Body Color:</span> ${hydrantData.body_color}</li>
-                        <li><span class="title">Type:</span> ${hydrantData.type}</li>
-                        <li><span class="title">Hose Size:</span> ${hydrantData.hose_size}</li>
-                        <li><span class="title">Storz:</span> ${hydrantData.storz}</li>
-                        <li><span class="title">Thread Type:</span> ${hydrantData.thread_type}</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="hydrant-info__btns">
-                    <button class="hydrant-info__edit-btn hydrant-info__btn"><i class="fa fa-edit"></i> Edit</button>
-                    <button class="hydrant-info__report-btn hydrant-info__btn">Report Problem</button>
-                  </div>
-              </div>
-            `;
-          }
-
-        var activeInfoWindow = null;
-
-        function initMap() {
-            const mapEl = document.getElementById('map-canvas');
-            const problemView = document.querySelector('.problemPage');
-            const addHydrantBtn = document.querySelector('.add-hydrant');
-            const addHydrantForm = document.querySelector('.add-hydrant-content');
-
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var lat=position.coords.latitude;
-                var lang=position.coords.longitude;
-                var myLatlng = new google.maps.LatLng(lat,lang);
-                var mapOptions = {zoom: 13.3, center: myLatlng};
-                var map = new google.maps.Map(mapEl, mapOptions);
-                var marker = new google.maps.Marker({position: myLatlng, map: map});
-                var searchInput = document.getElementById('searchInput');
-                var searchBox = new google.maps.places.SearchBox(searchInput);
-                map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
-
-                var hydrants = placeHydrants(map);
-
-                bindEvents();
-            }, onError, { timeout: 30000 });
-
-            function onError(error) {
-                alert('code: ' + error.code + '\n' +
-                'message: ' + error.message + '\n');
-            }
-
-          function handleReportBtnClick() {
-            mapEl.addEventListener('click', (e) => {
-              if (e.target.classList.contains('hydrant-info__report-btn')) {
-                problemView.classList.remove('el--hidden');
-              }
-            });
-          }
-
-          function handleProblemViewCloseClick() {
-            problemView.addEventListener('click', (e) => {
-              if (e.target.classList.contains('closebtn')) {
-                problemView.classList.add('el--hidden');
-              }
-            });
-          }
-
-          function handleAddHydrantClick() {
-            addHydrantBtn.addEventListener('click', (e) => {
-                addHydrantForm.classList.add('fadeIn')
-                addHydrantForm.classList.remove('el--hidden', 'fadeOut');
-            });
-          }
-
-          function handleHydrantFormCloseClick() {
-            addHydrantForm.addEventListener('click', (e) => {
-              if (e.target.classList.contains('closebtn')) {
-                addHydrantForm.classList.add('fadeOut');
-                delay(800).then(() => {
-                    addHydrantForm.classList.remove('fadeIn');
-                    addHydrantForm.classList.add('el--hidden');
-                })
-              }
-            });
-          }
-
-          function bindEvents() {
-            handleReportBtnClick();
-            handleProblemViewCloseClick();
-            handleAddHydrantClick();
-            handleHydrantFormCloseClick();
-          }
-        }
-
-        function placeHydrants(map) {
-            return fireData.map((hydrant, i) => {
-                var image = {
-                    url: 'img/hydrant.png',
-                    scaledSize: new google.maps.Size(34, 34)
-                };
-                var position = new google.maps.LatLng(hydrant.lat, hydrant.lon);
-
-                // create the custom hydrant marker
-                var hydrantMarker = new google.maps.Marker({
-                    position,
-                    icon: image,
-                    map,
-                    title: `Hydrant ${hydrant.hydrant_id}`
-                });
-
-                // attach the info popup to the hydrant marker
-                const infowindow = new google.maps.InfoWindow({
-                    content: hydrantInfoTemplate(hydrant),
-                    maxWidth: 400
-                });
-
-                // close previous hydrant when opening a new one
-                hydrantMarker.addListener("click", function() {
-                    activeInfoWindow && activeInfoWindow.close();
-                    infowindow.open(map, hydrantMarker);
-                    activeInfoWindow = infowindow;
-                });                
-            });
-        }
-
-        </script>
-        <script async defer
-        src="http://maps.google.com/maps/api/js?key=AIzaSyAY4RUgxwdpHRumfpCMmS7ZO1GSn-Fa6eA&callback=initMap&libraries=places" type="text/javascript"></script>
+        <script src="js/main.js"></script>
+        <script async defer src="http://maps.google.com/maps/api/js?key=AIzaSyAY4RUgxwdpHRumfpCMmS7ZO1GSn-Fa6eA&callback=initMap&libraries=places" type="text/javascript"></script>
     </head>
     <body>
         <input id="searchInput" class="controls" type="text" placeholder="Search Box">
         <div id="map-canvas"></div>
 
-        <!-- Add hydrant -->
-
         <button class="add-hydrant"></button>
         
-          <!-- Submit Page -->
-        
-          <div class="container problemPage el--hidden">
-              <button class="closebtn">X</button>
-              <h3 class="reportHead">Report Hydrant Problem</h3>
-              <form action="">
-              <div class="insideBox">
-              <label><input type="checkbox" id="radioButton">Out of Service</input></label><br>
-              <label><input type="checkbox" id="radioButton">Debris in the Hydrant</input></label><br>
-              <label><input type="checkbox" id="radioButton">Missing Caps & Stems</input><label></label><br>
-              <label><input type="checkbox" id="radioButton">Caps on Too Tight</input></label><br>
-              <label><input type="checkbox" id="radioButton">Blocked Hydrant</input></label><br>
-              <label><input type="checkbox" id="radioButton">Plug Away</input></label><br>
-              <label><input type="checkbox" id="radioButton">Other: 
-                <input type="text" name="oname" style="width: 200px;"></input>
-              </input><br>
-              <div class="subbtm">
-                <button>submit</button>
-              </div>
-              </div>
+        <div class="container problemPage el--hidden">
+            <button class="closebtn">X</button>
+            <h3 class="reportHead">Report Hydrant Problem</h3>
+            <form action="">
+                <div class="insideBox">
+                    <label><input type="checkbox" id="radioButton">Out of Service</input></label><br>
+                    <label><input type="checkbox" id="radioButton">Debris in the Hydrant</input></label><br>
+                    <label><input type="checkbox" id="radioButton">Missing Caps & Stems</input><label></label><br>
+                    <label><input type="checkbox" id="radioButton">Caps on Too Tight</input></label><br>
+                    <label><input type="checkbox" id="radioButton">Blocked Hydrant</input></label><br>
+                    <label><input type="checkbox" id="radioButton">Plug Away</input></label><br>
+                    <label><input type="checkbox" id="radioButton">Other: 
+                    <input type="text" name="oname" style="width: 200px;"></input>
+                    <br>
+                    <div class="subbtm">
+                        <button>submit</button>
+                    </div>
+                </div>
             </form>
-          </div>
+        </div>
 
-          <div class="add-hydrant-content el--hidden">
+        <div class="add-hydrant-content el--hidden">
             <button class="closebtn">X</button>
             <h2 class="add-hydrant-form__header">Add new hydrant</h2>
             <form class="add-hydrant-content__form">
                 <button class="add-hydrant-form__get-location">
                     <svg width="40" height="40" viewBox="0 0 512 512">
                         <path
-                         d="M507.38 68.225L315.582 484.108C294.161 530.519 224 515.72 224 463.993V288H47.933c-51.323 
+                            d="M507.38 68.225L315.582 484.108C294.161 530.519 224 515.72 224 463.993V288H47.933c-51.323 
                             0-66.635-70.111-20.115-91.582L443.683 4.529c39.945-18.437 82.602 22.735 63.697 
                             63.696zm-50.156-34.697L41.278 225.457c-15.491 7.149-10.443 30.526 6.708 30.526H256v208c0 
                             17.923 23.596 21.722 30.527 6.705L478.452 54.769c6.3-13.653-7.795-27.441-21.228-21.241z"/>
@@ -241,6 +83,5 @@
             </form>
         </div>
 
-        </main> 
     </body>
 </html>
