@@ -13,7 +13,7 @@ User can:
 
 Tech Highlights:
 
-* Used the *Google Maps API* to build the user interface on top of
+* Used the **Google Maps API** to build the user interface on top of
 * Designed the app with the user stories of actual fire fighters in mind
 * Developed the app on a team that worked together for the first time, had a variety of skill levels, and was on a tight timeline
 
