@@ -5,8 +5,7 @@
   "description": "An app designed to help fire fighters",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "server": "webpack-dev-server --config webpack.config.js"
+    "build": "webpack --config webpack.config.js"
   },
   "author": "Kalalau Cantrell",
   "license": "ISC",

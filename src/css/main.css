@@ -102,6 +102,12 @@ body {
   display: flex;
   flex-flow: column;
   align-items: center;
+  min-height: 450px;
+}
+
+.add-hydrant-content__form > button {
+  margin: 10px;
+  background-color: lightgrey;
 }
 
 .add-hydrant-content > h2 {
@@ -137,6 +143,7 @@ body {
   align-items: center;
   font-size: 0.75rem;
   margin-bottom: 100px;
+  background-color: lightgrey;
 }
 
 .hydrant-info__head {
